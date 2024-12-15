@@ -9,4 +9,4 @@ has a convenient way to handle colours
 and adds margin support.
 
 For the full documentation,
-please consult the [dictate.h](header itself).
+please consult the [header itself](dictate.h).
