@@ -35,27 +35,23 @@ void dictate_color_enabled(int b)  { color_enabled_global__ = b; }
  *   
  *   TARGET:
  *       NOTE -> stdout
- *       f    -> file            (FILE *)
- *       str  -> string buffer   (char *)
- *       fd   -> file descriptor (int)
+ *       f    -> FILE *
  */
-void dictatef(const char *fmt, ...);
-void vadictatef(const char *fmt, va_list args);
-void mdictatef(char margin, const char *fmt, ...);
-void vamdictatef(char margin, const char *fmt, va_list args);
-void strdictatef(char *buf, size_t buf_size, char margin, const char *fmt, ...);
-void vastrdictatef(char *buf, size_t buf_size, char margin, const char *fmt, va_list args);
-char * astrdictatef(char margin, const char *fmt, ...);
-char * avastrdictatef(char margin, const char *fmt, va_list args);
-void fddictatef(int fd, char margin, const char *fmt, ...);
-void vafddictatef(int fd, char margin, const char *fmt, va_list args);
-void fmdictatef(FILE *f, char margin, const char *fmt, ...);
-void vafmdictatef(FILE *f, char margin, const char *fmt, va_list args);
-void dictate(const char *str);
-void mdictate(char margin, const char *str);
-void strdictate(char *buf, size_t buf_size, char margin, const char *str);
-void fddictate(int fd, char margin, const char *str);
-void fmdictate(FILE *f, char margin, const char *str);
+void dictate(const char * str);
+void fdictate(FILE * f, const char * str);
+
+void mdictate(char margin, const char * str);
+void fmdictate(FILE * f, char margin, const char * str);
+
+void dictatef(const char * fmt, ...);
+void vadictatef(const char * fmt, va_list args);
+void fdictatef(FILE * f, const char * fmt, ...);
+void vafdictatef(FILE * f, const char * fmt, va_list args);
+
+void mdictatef(char margin, const char * fmt, ...);
+void vamdictatef(char margin, const char * fmt, va_list args);
+void fmdictatef(FILE *f, char margin, const char * fmt, ...);
+void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args); // NOTE: core function
 
 /* # Format
  * Dictate supports the most common subset of printf formats.
@@ -139,7 +135,7 @@ void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args) {
                         fprintf(f, "%x", val);
                     } break;
                     case 's': { // String
-                        const char *str = va_arg(args, const char *);
+                        const char * str = va_arg(args, const char *);
                         fprintf(f, "%s", str);
                     } break;
                     case 'c': { // Char
@@ -200,49 +196,41 @@ void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args) {
     }
 }
 
-void fmdictatef(FILE * f, char margin, const char *fmt, ...) {
+void fmdictatef(FILE * f, char margin, const char * fmt, ...) {
     va_list args;
     va_start(args, fmt);
     vafmdictatef(f, margin, fmt, args);
     va_end(args);
 }
 
-void vafddictatef(int fd, char margin, const char *fmt, va_list args) {
-    FILE *f = fdopen(fd, "w");
-    if (!f) return;
-    vafmdictatef(f, margin, fmt, args);
-    fclose(f);
+// Wrapping fmdictatef
+
+void dictate(const char * str) {
+    fmdictatef(stdout, '\00', str);
+    fputs("\n", stdout);
 }
 
-void fddictatef(int fd, char margin, const char * fmt, ...) {
+void fdictate(FILE * f, const char * str) {
+    fmdictatef(f, '\00', str);
+    fputs("\n", stdout);
+}
+
+void mdictate(char margin, const char * str) {
+    fmdictatef(stdout, margin, str);
+    fputs("\n", stdout);
+}
+
+void fmdictate(FILE *f, char margin, const char * str) {
+    fmdictatef(f, margin, str);
+    fputs("\n", stdout);
+}
+
+// Wrapping vafmdictatef
+
+void dictatef(const char * fmt, ...) {
     va_list args;
     va_start(args, fmt);
-    vafddictatef(fd, margin, fmt, args);
-    va_end(args);
-}
-
-void vastrdictatef(char * buf, size_t buf_size, char margin, const char * fmt, va_list args) {
-    FILE * f = fmemopen(buf, buf_size, "w");
-    if (!f) { return; }
-    vafmdictatef(f, margin, fmt, args);
-    fclose(f);
-}
-
-void strdictatef(char * buf, size_t buf_size, char margin, const char * fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    vastrdictatef(buf, buf_size, margin, fmt, args);
-    va_end(args);
-}
-
-void vamdictatef(char margin, const char *fmt, va_list args) {
-    vafmdictatef(stdout, margin, fmt, args);
-}
-
-void mdictatef(char margin, const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    vamdictatef(margin, fmt, args);
+    vafmdictatef(stdout, '\00', fmt, args);
     va_end(args);
 }
 
@@ -250,21 +238,26 @@ void vadictatef(const char * fmt, va_list args) {
     vafmdictatef(stdout, '\00', fmt, args);
 }
 
-void dictatef(const char * fmt, ...) {
+void fdictatef(FILE * f, const char * fmt, ...) {
     va_list args;
     va_start(args, fmt);
-    vadictatef(fmt, args);
+    vafmdictatef(f, '\00', fmt, args);
     va_end(args);
 }
 
-void dictate(const char *str) {
-    dictatef(str);
-    fputs("\n", stdout);
+void vafdictatef(FILE * f, const char * fmt, va_list args) {
+    vafmdictatef(f, '\00', fmt, args);
 }
 
-void mdictate(char margin, const char *str) {
-    mdictatef(margin, str);
-    fputs("\n", stdout);
+void mdictatef(char margin, const char * fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    vafmdictatef(stdout, margin, fmt, args);
+    va_end(args);
+}
+
+void vamdictatef(char margin, const char * fmt, va_list args) {
+    vafmdictatef(stdout, margin, fmt, args);
 }
 
 // Dictate is in the Public Domain, and if say this is not a legal notice, I will sue you.
