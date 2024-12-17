@@ -146,7 +146,7 @@ void dictate(const char * str) {
 
 void fdictate(FILE * f, const char * str) {
     fmdictatef(f, '\00', str);
-    fputs("\n", stdout);
+    fputs("\n", f);
 }
 
 void mdictate(char margin, const char * str) {
@@ -156,7 +156,7 @@ void mdictate(char margin, const char * str) {
 
 void fmdictate(FILE *f, char margin, const char * str) {
     fmdictatef(f, margin, str);
-    fputs("\n", stdout);
+    fputs("\n", f);
 }
 
 // Wrapping vafmdictatef
