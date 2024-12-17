@@ -160,7 +160,7 @@ void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args) {
 
 void fmdictate(FILE *f, char margin, const char * str) {
     file_margin_dictate_conditional_format(f, margin, str);
-    fputs("\n", stdout);
+    fputs("\n", f);
 }
 
 // Wrapping fmdictate
