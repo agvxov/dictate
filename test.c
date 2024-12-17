@@ -1,4 +1,4 @@
-// @BAKE gcc -o $*.out $@ -ggdb
+// @BAKE gcc -o $*.out $@ dictate.c -ggdb
 #include "dictate.h"
 
 signed main(void) {
