@@ -18,5 +18,8 @@ signed main(void) {
     dictate("--------");
     mdictate('#', "this following text\nhas a margin\non the left");
 
+    dictate("--------");
+    dictate("these %s format %d specifiers %x do not crash and burn %s");
+
     return 0;
 }

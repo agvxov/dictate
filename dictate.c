@@ -10,8 +10,15 @@ static int pedantic_flushing__    = 1;
 void dictate_pedantic_flush(int b) { pedantic_flushing__    = b; }
 void dictate_color_enabled(int b)  { color_enabled_global__ = b; }
 
-// Every other function is a wrapper around this one
-void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args) {
+// Every other function is ultimetly a wrapper around this one
+static
+void vararg_file_margin_dictate_conditional_format(
+    FILE * f,
+    char margin,
+    int do_process_format,
+    const char * fmt,
+    va_list args
+  ) {
     inline
     void print_margin(char margin) {
         const int margin_width = 3;
@@ -59,6 +66,11 @@ void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args) {
             } break;
 
             case '%': { // fmt specifiers
+                if (!do_process_format) {
+                    fputc('%', f);
+                    break;
+                }
+
                 switch (*(++s)) {
                     case 'd': { // Decimal
                         long long val = va_arg(args, long long);
@@ -130,7 +142,42 @@ void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args) {
     if (pedantic_flushing__) {
         fflush(f);
     }
+
 }
+
+static
+void file_margin_dictate_conditional_format(FILE *f, char margin, const char * str, ...) {
+    va_list args;
+    va_start(args, str);
+    vararg_file_margin_dictate_conditional_format(f, margin, 0, str, args);
+    va_end(args);
+}
+
+void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args) {
+    vararg_file_margin_dictate_conditional_format(f, margin, 1, fmt, args);
+}
+
+
+void fmdictate(FILE *f, char margin, const char * str) {
+    file_margin_dictate_conditional_format(f, margin, str);
+    fputs("\n", stdout);
+}
+
+// Wrapping fmdictate
+
+void dictate(const char * str) {
+    fmdictate(stdout, '\00', str);
+}
+
+void fdictate(FILE * f, const char * str) {
+    fmdictate(f, '\00', str);
+}
+
+void mdictate(char margin, const char * str) {
+    fmdictate(stdout, margin, str);
+}
+
+// Wrapping vafmdictatef
 
 void fmdictatef(FILE * f, char margin, const char * fmt, ...) {
     va_list args;
@@ -138,30 +185,6 @@ void fmdictatef(FILE * f, char margin, const char * fmt, ...) {
     vafmdictatef(f, margin, fmt, args);
     va_end(args);
 }
-
-// Wrapping fmdictatef
-
-void dictate(const char * str) {
-    fmdictatef(stdout, '\00', str);
-    fputs("\n", stdout);
-}
-
-void fdictate(FILE * f, const char * str) {
-    fmdictatef(f, '\00', str);
-    fputs("\n", f);
-}
-
-void mdictate(char margin, const char * str) {
-    fmdictatef(stdout, margin, str);
-    fputs("\n", stdout);
-}
-
-void fmdictate(FILE *f, char margin, const char * str) {
-    fmdictatef(f, margin, str);
-    fputs("\n", f);
-}
-
-// Wrapping vafmdictatef
 
 void dictatef(const char * fmt, ...) {
     va_list args;
