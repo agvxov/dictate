@@ -76,7 +76,9 @@ void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args) {
                         char ch = (char)va_arg(args, int);
                         fprintf(f, "%c", ch);
                     } break;
-                    case '0' ... '9': { // Static width
+                    case '0': case '1': case '2': case '3': case '4':
+                    case '5': case '6': case '7': case '8': case '9':
+                    { // Static width
                         int width;
                         for (width = 0; *s >= '0' && *s <= '9'; s++) {
                             width = width * 10 + (*s - '0');
