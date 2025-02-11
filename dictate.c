@@ -98,10 +98,10 @@ void vararg_file_margin_dictate_conditional_format(
 
                         --s;
 
-                        goto p;
+                        goto width_switch;
                     case '*': // Dynamic width
                         width = va_arg(args, long long);
-                      p:
+                      width_switch:
                         switch (*(++s)) {
                             case 'd': {
                                 long long x = va_arg(args, long long);
