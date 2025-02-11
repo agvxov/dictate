@@ -3,7 +3,7 @@
 /* ## Dictate Imeplementation
  */
 
-// Do not ever set by hand, might be subject to change
+// These might be subject to change
 static int color_enabled_global__ = 1;
 static int pedantic_flushing__    = 1;
 
