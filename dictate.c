@@ -37,15 +37,15 @@ void vararg_file_margin_dictate_conditional_format(
             case '$': { // Color handling
                 if (color_enabled_global__) {
                     switch (*(++s)) {
-                        case 'r': fprintf(f, "\033[31m"); break;
-                        case 'g': fprintf(f, "\033[32m"); break;
-                        case 'b': fprintf(f, "\033[34m"); break;
-                        case 'y': fprintf(f, "\033[33m"); break;
-                        case 'm': fprintf(f, "\033[35m"); break;
-                        case 'c': fprintf(f, "\033[36m"); break;
-                        case 'B': fprintf(f, "\033[1m"); break;
-                        case 'I': fprintf(f, "\033[3m"); break;
-                        case '0': fprintf(f, "\033[0m"); break;
+                        case 'r': fputs("\033[31m", f); break;
+                        case 'g': fputs("\033[32m", f); break;
+                        case 'b': fputs("\033[34m", f); break;
+                        case 'y': fputs("\033[33m", f); break;
+                        case 'm': fputs("\033[35m", f); break;
+                        case 'c': fputs("\033[36m", f); break;
+                        case 'B': fputs("\033[1m",  f); break;
+                        case 'I': fputs("\033[3m",  f); break;
+                        case '0': fputs("\033[0m",  f); break;
                         default: --s; break; // Invalid color code, backtrack
                     }
                 } else {
