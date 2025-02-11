@@ -19,7 +19,7 @@ signed main(void) {
     mdictate('#', "this following text\nhas a margin\non the left");
 
     dictate("--------");
-    dictate("these %s format %d specifiers %x do not crash and burn %s");
+    dictate("using %s a %x format specifier %d without 'f' does nothing");
 
     return 0;
 }
