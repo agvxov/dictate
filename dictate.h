@@ -25,7 +25,6 @@ void dictate_color_enabled(int b);
  * 
  *   [a] [va] [TARGET] [m] dictate [f]
  *   
- *   a   -> allocate (must be used along side 'str')
  *   va  -> take a va_list (instead of varargs)
  *   m   -> margin; specifies a prefix inserted before each line
  *   f   -> printf style formatted output; if ommited, a new line will be appended
