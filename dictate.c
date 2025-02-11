@@ -19,18 +19,18 @@ void vararg_file_margin_dictate_conditional_format(
     const char * fmt,
     va_list args
   ) {
-    inline
-    void print_margin(char margin) {
-        const int margin_width = 3;
-        if (margin) {
-            for (int i = 0; i < margin_width; i++) {
-                fputc(margin, f);
-            }
-            fputc(' ', f);
+    #define PRINT_MARGIN do { if (margin) { fputs(margin_buffer, f); } } while (0)
+    const int margin_width = 3;
+    char margin_buffer[margin_width + sizeof(' ') + 1];
+    if (margin) {
+        for (int i = 0; i < margin_width; i++) {
+            margin_buffer[i] = margin;
         }
+        margin_buffer[margin_width]   =  ' ';
+        margin_buffer[margin_width+1] = '\0';
     }
 
-    print_margin(margin);
+    PRINT_MARGIN;
 
     for (const char * s = fmt; *s != '\0'; s++) {
         switch (*s) {
@@ -129,7 +129,7 @@ void vararg_file_margin_dictate_conditional_format(
             case '\n': { // Margin handling
                 fputc('\n', f);
                 if (*(s+1) != '\0') {
-                    print_margin(margin);
+                    PRINT_MARGIN;
                 }
             } break;
 
@@ -143,6 +143,7 @@ void vararg_file_margin_dictate_conditional_format(
         fflush(f);
     }
 
+    #undef PRINT_MARGIN
 }
 
 static

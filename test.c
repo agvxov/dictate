@@ -1,4 +1,10 @@
-// @BAKE gcc -o $*.out $@ dictate.c -ggdb -Wall -Wpedantic
+/* @BAKE
+    gcc   -o $*-gcc.out   $@ dictate.c -Wall -Wpedantic -ggdb -fsanitize=address
+    clang -o $*-clang.out $@ dictate.c -Wall -Wpedantic -ggdb
+    ./$*-gcc.out
+    ./$*-clang.out
+   @STOP
+*/
 #include "dictate.h"
 
 signed main(void) {
