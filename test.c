@@ -9,6 +9,14 @@
 #include "dictate.h"
 
 signed main(void) {
+    dictate(
+        "--------\n",
+        10, " / ", 3, " = ", 10.0 / 3.0,
+        "\n"
+    );
+
+    fmdictate(stderr, '-', "\n\n\n");
+
     dictate("$rthis $gstring $bis $yvery $mcolorful $ckek$0\n");
     dictate_color_enabled(0);
     dictate("$rthis $gstring $cnot $bis $yvery $mcolorful$0\n");
@@ -27,14 +35,6 @@ signed main(void) {
 
     dictate("--------\n");
     dictate("using %s a %x format specifier %d without 'f' does nothing\n");
-
-    dictate(
-        "--------\n",
-        10, " / ", 3, " = ", 10.0 / 3.0,
-        "\n"
-    );
-
-    fmdictate(stderr, '-', "\n\n\n");
 
     return 0;
 }
