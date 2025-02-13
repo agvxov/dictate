@@ -4,18 +4,18 @@
  */
 
 // These might be subject to change
-static int color_enabled_global__ = 1;
-static int pedantic_flushing__    = 1;
+static thread_local int color_enabled_global__ = 1;
+static thread_local int pedantic_flushing__    = 1;
 
-void dictate_pedantic_flush(int b) { pedantic_flushing__    = b; }
-void dictate_color_enabled(int b)  { color_enabled_global__ = b; }
+void dictate_pedantic_flush(bool b) { pedantic_flushing__    = b; }
+void dictate_color_enabled(bool b)  { color_enabled_global__ = b; }
 
-// Every other function is ultimetly a wrapper around this one
+// Every format function is ultimetly a wrapper around this one
 static
 void vararg_file_margin_dictate_conditional_format(
     FILE * f,
     char margin,
-    int do_process_format,
+    bool do_process_format,
     const char * fmt,
     va_list args
   ) {
@@ -147,35 +147,21 @@ void vararg_file_margin_dictate_conditional_format(
 }
 
 static
-void file_margin_dictate_conditional_format(FILE *f, char margin, const char * str, ...) {
+void file_margin_dictate_conditional_format(
+    FILE *f,
+    char margin,
+    bool do_process_format,
+    const char * str,
+    ...
+) {
     va_list args;
     va_start(args, str);
-    vararg_file_margin_dictate_conditional_format(f, margin, 0, str, args);
+    vararg_file_margin_dictate_conditional_format(f, margin, do_process_format, str, args);
     va_end(args);
 }
 
 void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args) {
-    vararg_file_margin_dictate_conditional_format(f, margin, 1, fmt, args);
-}
-
-
-void fmdictate(FILE *f, char margin, const char * str) {
-    file_margin_dictate_conditional_format(f, margin, str);
-    fputs("\n", f);
-}
-
-// Wrapping fmdictate
-
-void dictate(const char * str) {
-    fmdictate(stdout, '\00', str);
-}
-
-void fdictate(FILE * f, const char * str) {
-    fmdictate(f, '\00', str);
-}
-
-void mdictate(char margin, const char * str) {
-    fmdictate(stdout, margin, str);
+    vararg_file_margin_dictate_conditional_format(f, margin, true, fmt, args);
 }
 
 // Wrapping vafmdictatef
@@ -220,4 +206,14 @@ void vamdictatef(char margin, const char * fmt, va_list args) {
     vafmdictatef(stdout, margin, fmt, args);
 }
 
-// Dictate is in the Public Domain, and if say this is not a legal notice, I will sue you.
+// Complex type printers
+void dictate_str(FILE * f, char m, const char * const str) {
+    file_margin_dictate_conditional_format(
+        f,
+        m,
+        false,
+        str
+    );
+}
+
+// Dictate is in the Public Domain, and if you say this is not a legal notice, I will sue you.
