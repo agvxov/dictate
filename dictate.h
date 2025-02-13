@@ -13,7 +13,7 @@
 #endif
 
 /* ## State
- * Dictate has thread local global state for convinience.
+ * Dictate has thread local global state for convenience.
  */
 /* Flush after every print.
  * Useful for debugging when the process could terminate unexpectedly.
@@ -86,8 +86,19 @@ static inline void dictate_ptr     (FILE * f, [[ maybe_unused ]] char m, void *i
 // complex type printers
 extern void dictate_str(FILE * f, char m, const char * const str);
 
+// null object type to fool _Generic into our plot
 struct dictatenullt { void * x; };
 
+/* Here we try our best to optimize away all costs of our macro magick.
+ *
+ * GCC is always 0 cost like this.
+ *
+ * Clang also optimizes away the calls, but without -O1 or higher,
+ *  it still constructs a swarm of our null objects.
+ * An empty struct is non-standard, yet clang can handle it,
+ *  however it still allocates 1 byte for them each,
+ *  so thats a non-solution.
+ */
 #ifdef __GNUC__
 # ifdef __clang__
 #  define _DICATATE_NOOP_ATTRIBUTES __attribute__((always_inline))
