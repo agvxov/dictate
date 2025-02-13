@@ -4,8 +4,8 @@ AR = ar
 ARFLAGS = rcs
 
 main:
-	${CC} ${CFLAGS} -shared -fPIC dictate.c -o dictate.so
-	${CC} ${CFLAGS} -c dictate.c -o libdictate.o
+	${CC} ${CFLAGS} -shared -fPIC dictate.c -o libdictate.so
+	${CC} ${CFLAGS} -c dictate.c -o dictate.o
 	${AR} rcs libdictate.a dictate.o
 
 clean:
