@@ -23,7 +23,7 @@ signed main(void) {
     dictatef("this too is padded here: %*d\n", 6, 10);
 
     dictate("--------\n");
-    //mdictate('#', "this following text\nhas a margin\non the left");
+    mdictate('#', "this following text\nhas a margin\non the left\n");
 
     dictate("--------\n");
     dictate("using %s a %x format specifier %d without 'f' does nothing\n");
