@@ -171,43 +171,43 @@ void noop(
         DICTATE_SWITCH(f,m,_121); DICTATE_SWITCH(f,m,_122); DICTATE_SWITCH(f,m,_123); DICTATE_SWITCH(f,m,_124); \
         DICTATE_SWITCH(f,m,_125); DICTATE_SWITCH(f,m,_126); DICTATE_SWITCH(f,m,_127);
 
-#define fmdictate(...) DICTATE_BIG_GUY(__VA_ARGS__, \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
-    ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}) \
-)
-#define fdictate(f, ...) fmdictate(f, '\00', __VA_ARGS__)
-#define mdictate(m, ...) fmdictate(stdout, m, __VA_ARGS__)
-#define dictate(...)  fmdictate(stdout, '\00', __VA_ARGS__)
+#define fmdictate(...) do { DICTATE_BIG_GUY(__VA_ARGS__, \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
+        ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}) \
+    )} while (0)
+#define fdictate(f, ...) do { fmdictate(f, '\00', __VA_ARGS__);      } while (0)
+#define mdictate(m, ...) do { fmdictate(stdout, m, __VA_ARGS__);     } while (0)
+#define dictate(...)     do { fmdictate(stdout, '\00', __VA_ARGS__); } while (0)
 // ################################
 // ################################
 // ################################
