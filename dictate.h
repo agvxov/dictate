@@ -254,5 +254,37 @@ void vamdictatef(char margin, const char * fmt, va_list args);
 void fmdictatef(FILE *f, char margin, const char * fmt, ...);
 void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args); // NOTE: core function
 
+/* ## Dictate debugging functions
+ */
+#ifdef DEBUG
+# ifndef DICTATENDEBUG
+#  define debug_dictate          dictate
+#  define debug_mdictate        mdictate
+#  define debug_fdictate        fdictate
+#  define debug_fmdictate      fmdictate
+#  define debug_dictatef         dictatef
+#  define debug_vadictatef     vadictatef
+#  define debug_fdictatef       fdictatef
+#  define debug_vafdictatef   vafdictatef
+#  define debug_mdictatef       mdictatef
+#  define debug_vamdictatef   vamdictatef
+#  define debug_fmdictatef     fmdictatef
+#  define debug_vafmdictatef vafmdictatef
+# endif
+#else
+#  define debug_dictate(...)
+#  define debug_mdictate(...)
+#  define debug_fdictate(...)
+#  define debug_fmdictate(...)
+#  define debug_dictatef(...)
+#  define debug_vadictatef(...)
+#  define debug_fdictatef(...)
+#  define debug_vafdictatef(...)
+#  define debug_mdictatef(...)
+#  define debug_vamdictatef(...)
+#  define debug_fmdictatef(...)
+#  define debug_vafmdictatef(...)
+#endif
+
 // Dictate is in the Public Domain, and if you say this is not a legal notice, I will sue you.
 #endif
