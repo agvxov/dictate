@@ -81,7 +81,24 @@ static inline void dictate_ullong  (FILE * f, [[ maybe_unused ]] char m, unsigne
 static inline void dictate_float   (FILE * f, [[ maybe_unused ]] char m, float i)              { fprintf(f, "%f", i); }
 static inline void dictate_double  (FILE * f, [[ maybe_unused ]] char m, double i)             { fprintf(f, "%lf", i); }
 static inline void dictate_ldouble (FILE * f, [[ maybe_unused ]] char m, long double i)        { fprintf(f, "%Lf", i); }
-static inline void dictate_ptr     (FILE * f, [[ maybe_unused ]] char m, void *i)              { fprintf(f, "%p", i); }
+static inline void dictate_ptr     (FILE * f, [[ maybe_unused ]] char m, void * i)             { fprintf(f, "%p", i); }
+// trivial type pointer printers
+#define DICTATE_TYPE_POINTER_WRAP(F, t) \
+static inline void F ## _ptr (FILE * f, [[ maybe_unused ]] char m,t * i) { dictate_ptr(f,m,(void*)i); fputc(' ',f); F(f,m,*i); }
+DICTATE_TYPE_POINTER_WRAP(dictate_bool, bool)
+DICTATE_TYPE_POINTER_WRAP(dictate_char, char)
+DICTATE_TYPE_POINTER_WRAP(dictate_uchar, unsigned char)
+DICTATE_TYPE_POINTER_WRAP(dictate_short, short)
+DICTATE_TYPE_POINTER_WRAP(dictate_ushort, unsigned short)
+DICTATE_TYPE_POINTER_WRAP(dictate_int, int)
+DICTATE_TYPE_POINTER_WRAP(dictate_uint, unsigned int)
+DICTATE_TYPE_POINTER_WRAP(dictate_long, long)
+DICTATE_TYPE_POINTER_WRAP(dictate_ulong, unsigned long)
+DICTATE_TYPE_POINTER_WRAP(dictate_llong, long long)
+DICTATE_TYPE_POINTER_WRAP(dictate_ullong, unsigned long long)
+DICTATE_TYPE_POINTER_WRAP(dictate_float, float)
+DICTATE_TYPE_POINTER_WRAP(dictate_double, double)
+DICTATE_TYPE_POINTER_WRAP(dictate_ldouble, long double)
 
 // complex type printers
 extern void dictate_str(FILE * f, char m, const char * const str);
@@ -119,7 +136,11 @@ void noop(
 }
 
 #define DICTATE_SWITCH(f, m, t) _Generic((t) \
+        /* special */ \
         , default: noop \
+        , void*: dictate_ptr \
+        , char*: dictate_str \
+        /* primitives */ \
         , bool: dictate_bool \
         , char: dictate_char \
         , unsigned char: dictate_uchar \
@@ -134,8 +155,21 @@ void noop(
         , float: dictate_float \
         , double: dictate_double \
         , long double: dictate_ldouble \
-        , void*: dictate_ptr \
-        , char*: dictate_str \
+        /* primitive pointers */ \
+        , bool*: dictate_bool_ptr \
+        , char*: dictate_char_ptr \
+        , unsigned char*: dictate_uchar_ptr \
+        , short*: dictate_short_ptr \
+        , unsigned short*: dictate_ushort_ptr \
+        , int*: dictate_int_ptr \
+        , unsigned int*: dictate_uint_ptr \
+        , long*: dictate_long_ptr \
+        , unsigned long*: dictate_ulong_ptr \
+        , long long*: dictate_llong_ptr \
+        , unsigned long long*: dictate_ullong_ptr \
+        , float*: dictate_float_ptr \
+        , double*: dictate_double_ptr \
+        , long double*: dictate_ldouble_ptr \
     )(f, m, t)
 
 #define DICTATE_BIG_GUY(\
