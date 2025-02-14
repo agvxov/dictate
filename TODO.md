@@ -5,3 +5,6 @@
    escapes quoting characters and converts control characters to something human readable
    (probably carot notation)
 + debug\_* variants should be added; i will have to decide between DEBUG and NDEBUG
++ array printing
++ support for the most common library structs when a foreign header is detected
++ user type printing
