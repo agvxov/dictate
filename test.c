@@ -15,7 +15,7 @@ signed main(void) {
         "\n"
     );
 
-    fmdictate(stderr, '-', "\n\n\n");
+    fmdictate(stderr, "---", "\n\n\n");
 
     dictate("$rthis $gstring $bis $yvery $mcolorful $ckek$0\n");
     dictate_color_enabled(0);
@@ -31,7 +31,7 @@ signed main(void) {
     dictatef("this too is padded here: %*d\n", 6, 10);
 
     dictate("--------\n");
-    mdictate('#', "this following text\nhas a margin\non the left\n");
+    mdictate("$r###$0 ", "this following text\nhas a margin\non the left\n");
 
     dictate("--------\n");
     dictate("using %s a %x format specifier %d without 'f' does nothing\n");

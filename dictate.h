@@ -67,24 +67,24 @@ void fmdictate(FILE * f, char margin, ...);
 #include <stdio.h>
 
 // trivial type printers
-static inline void dictate_bool    (FILE * f, [[ maybe_unused ]] char m, bool i)               { fprintf(f, i ? "true" : "false"); }
-static inline void dictate_char    (FILE * f, [[ maybe_unused ]] char m, char i)               { fprintf(f, "%c", i); }
-static inline void dictate_uchar   (FILE * f, [[ maybe_unused ]] char m, unsigned char i)      { fprintf(f, "%c", i); }
-static inline void dictate_short   (FILE * f, [[ maybe_unused ]] char m, short i)              { fprintf(f, "%hd", i); }
-static inline void dictate_ushort  (FILE * f, [[ maybe_unused ]] char m, unsigned short i)     { fprintf(f, "%hu", i); }
-static inline void dictate_int     (FILE * f, [[ maybe_unused ]] char m, int i)                { fprintf(f, "%d", i); }
-static inline void dictate_uint    (FILE * f, [[ maybe_unused ]] char m, unsigned int i)       { fprintf(f, "%u", i); }
-static inline void dictate_long    (FILE * f, [[ maybe_unused ]] char m, long i)               { fprintf(f, "%ld", i); }
-static inline void dictate_ulong   (FILE * f, [[ maybe_unused ]] char m, unsigned long i)      { fprintf(f, "%lu", i); }
-static inline void dictate_llong   (FILE * f, [[ maybe_unused ]] char m, long long i)          { fprintf(f, "%lld", i); }
-static inline void dictate_ullong  (FILE * f, [[ maybe_unused ]] char m, unsigned long long i) { fprintf(f, "%llu", i); }
-static inline void dictate_float   (FILE * f, [[ maybe_unused ]] char m, float i)              { fprintf(f, "%f", i); }
-static inline void dictate_double  (FILE * f, [[ maybe_unused ]] char m, double i)             { fprintf(f, "%lf", i); }
-static inline void dictate_ldouble (FILE * f, [[ maybe_unused ]] char m, long double i)        { fprintf(f, "%Lf", i); }
-static inline void dictate_ptr     (FILE * f, [[ maybe_unused ]] char m, void * i)             { fprintf(f, "%p", i); }
+static inline void dictate_bool    (FILE * const f, [[ maybe_unused ]] const char * const m, const bool i)               { fprintf(f, i ? "true" : "false"); }
+static inline void dictate_char    (FILE * const f, [[ maybe_unused ]] const char * const m, const char i)               { fprintf(f, "%c", i); }
+static inline void dictate_uchar   (FILE * const f, [[ maybe_unused ]] const char * const m, const unsigned char i)      { fprintf(f, "%c", i); }
+static inline void dictate_short   (FILE * const f, [[ maybe_unused ]] const char * const m, const short i)              { fprintf(f, "%hd", i); }
+static inline void dictate_ushort  (FILE * const f, [[ maybe_unused ]] const char * const m, const unsigned short i)     { fprintf(f, "%hu", i); }
+static inline void dictate_int     (FILE * const f, [[ maybe_unused ]] const char * const m, const int i)                { fprintf(f, "%d", i); }
+static inline void dictate_uint    (FILE * const f, [[ maybe_unused ]] const char * const m, const unsigned int i)       { fprintf(f, "%u", i); }
+static inline void dictate_long    (FILE * const f, [[ maybe_unused ]] const char * const m, const long i)               { fprintf(f, "%ld", i); }
+static inline void dictate_ulong   (FILE * const f, [[ maybe_unused ]] const char * const m, const unsigned long i)      { fprintf(f, "%lu", i); }
+static inline void dictate_llong   (FILE * const f, [[ maybe_unused ]] const char * const m, const long long i)          { fprintf(f, "%lld", i); }
+static inline void dictate_ullong  (FILE * const f, [[ maybe_unused ]] const char * const m, const unsigned long long i) { fprintf(f, "%llu", i); }
+static inline void dictate_float   (FILE * const f, [[ maybe_unused ]] const char * const m, const float i)              { fprintf(f, "%f", i); }
+static inline void dictate_double  (FILE * const f, [[ maybe_unused ]] const char * const m, const double i)             { fprintf(f, "%lf", i); }
+static inline void dictate_ldouble (FILE * const f, [[ maybe_unused ]] const char * const m, const long double i)        { fprintf(f, "%Lf", i); }
+static inline void dictate_ptr     (FILE * const f, [[ maybe_unused ]] const char * const m, const void * i)             { fprintf(f, "%p", i); }
 // trivial type pointer printers
 #define DICTATE_TYPE_POINTER_WRAP(F, t) \
-static inline void F ## _ptr (FILE * f, [[ maybe_unused ]] char m,t * i) { dictate_ptr(f,m,(void*)i); fputc(' ',f); F(f,m,*i); }
+static inline void F ## _ptr (FILE * const f, [[ maybe_unused ]] const char * const m, t * i) { dictate_ptr(f,m,(void*)i); fputc(' ',f); F(f,m,*i); }
 DICTATE_TYPE_POINTER_WRAP(dictate_bool, bool)
 DICTATE_TYPE_POINTER_WRAP(dictate_char, char)
 DICTATE_TYPE_POINTER_WRAP(dictate_uchar, unsigned char)
@@ -101,10 +101,10 @@ DICTATE_TYPE_POINTER_WRAP(dictate_double, double)
 DICTATE_TYPE_POINTER_WRAP(dictate_ldouble, long double)
 
 // complex type printers
-extern void dictate_str(FILE * f, char m, const char * const str);
+extern void dictate_str(FILE * const f, const char * const m, const char * const str);
 
 // null object type to fool _Generic into our plot
-struct dictatenullt { void * x; };
+struct dictatenullt { const void * x; };
 
 /* Here we try our best to optimize away all costs of our macro magick.
  *
@@ -129,7 +129,7 @@ struct dictatenullt { void * x; };
 static inline _DICATATE_NOOP_ATTRIBUTES
 void noop(
     [[ maybe_unused ]] const FILE * const f,
-    [[ maybe_unused ]] const char m,
+    [[ maybe_unused ]] const char * const m,
     [[ maybe_unused ]] const struct dictatenullt i
 ) {
     return;
@@ -157,7 +157,6 @@ void noop(
         , long double: dictate_ldouble \
         /* primitive pointers */ \
         , bool*: dictate_bool_ptr \
-        , char*: dictate_char_ptr \
         , unsigned char*: dictate_uchar_ptr \
         , short*: dictate_short_ptr \
         , unsigned short*: dictate_ushort_ptr \
@@ -250,9 +249,9 @@ void noop(
         ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), \
         ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}), ((struct dictatenullt){0}) \
     )} while (0)
-#define fdictate(f, ...) do { fmdictate(f, '\00', __VA_ARGS__);      } while (0)
+#define fdictate(f, ...) do { fmdictate(f, NULL, __VA_ARGS__);      } while (0)
 #define mdictate(m, ...) do { fmdictate(stdout, m, __VA_ARGS__);     } while (0)
-#define dictate(...)     do { fmdictate(stdout, '\00', __VA_ARGS__); } while (0)
+#define dictate(...)     do { fmdictate(stdout, NULL, __VA_ARGS__); } while (0)
 // ################################
 // ################################
 // ################################
@@ -278,15 +277,15 @@ void noop(
  *     %s  -> C string
  *     %c  -> Single character
  */
-void dictatef(const char * fmt, ...);
-void vadictatef(const char * fmt, va_list args);
-void fdictatef(FILE * f, const char * fmt, ...);
-void vafdictatef(FILE * f, const char * fmt, va_list args);
+void dictatef(const char * const fmt, ...);
+void vadictatef(const char * const fmt, va_list args);
+void fdictatef(FILE * const f, const char * const fmt, ...);
+void vafdictatef(FILE * const f, const char * const fmt, va_list args);
 
-void mdictatef(char margin, const char * fmt, ...);
-void vamdictatef(char margin, const char * fmt, va_list args);
-void fmdictatef(FILE *f, char margin, const char * fmt, ...);
-void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args); // NOTE: core function
+void mdictatef(const char * const margin, const char * const fmt, ...);
+void vamdictatef(const char * const margin, const char * const fmt, va_list args);
+void fmdictatef(FILE * const f, const char * const margin, const char * const fmt, ...);
+void vafmdictatef(FILE * f, const char * const margin, const char * const fmt, va_list args); // NOTE: core function
 
 /* ## Dictate debugging functions
  */

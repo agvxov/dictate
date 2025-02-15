@@ -10,25 +10,30 @@ static thread_local int pedantic_flushing__    = 1;
 void dictate_pedantic_flush(bool b) { pedantic_flushing__    = b; }
 void dictate_color_enabled(bool b)  { color_enabled_global__ = b; }
 
+// dependency for the core function (recursion with indirection)
+static
+void file_margin_dictate_conditional_format(
+    FILE * const f,
+    const char * const margin,
+    bool do_process_format,
+    const char * const str,
+    ...
+);
+
 // Every format function is ultimetly a wrapper around this one
 static
 void vararg_file_margin_dictate_conditional_format(
-    FILE * f,
-    char margin,
+    FILE * const f,
+    const char * const margin,
     bool do_process_format,
-    const char * fmt,
+    const char * const fmt,
     va_list args
   ) {
-    #define PRINT_MARGIN do { if (margin) { fputs(margin_buffer, f); } } while (0)
-    const int margin_width = 3;
-    char margin_buffer[margin_width + sizeof(' ') + 1];
-    if (margin) {
-        for (int i = 0; i < margin_width; i++) {
-            margin_buffer[i] = margin;
-        }
-        margin_buffer[margin_width]   =  ' ';
-        margin_buffer[margin_width+1] = '\0';
-    }
+    #define PRINT_MARGIN do { \
+            if (margin) { \
+                file_margin_dictate_conditional_format(f, NULL, false, margin); \
+            } \
+        } while (0)
 
     PRINT_MARGIN;
 
@@ -148,10 +153,10 @@ void vararg_file_margin_dictate_conditional_format(
 
 static
 void file_margin_dictate_conditional_format(
-    FILE *f,
-    char margin,
+    FILE * const f,
+    const char * const margin,
     bool do_process_format,
-    const char * str,
+    const char * const str,
     ...
 ) {
     va_list args;
@@ -160,60 +165,55 @@ void file_margin_dictate_conditional_format(
     va_end(args);
 }
 
-void vafmdictatef(FILE * f, char margin, const char * fmt, va_list args) {
+void vafmdictatef(FILE * const f, const char * const margin, const char * const fmt, va_list args) {
     vararg_file_margin_dictate_conditional_format(f, margin, true, fmt, args);
 }
 
 // Wrapping vafmdictatef
 
-void fmdictatef(FILE * f, char margin, const char * fmt, ...) {
+void fmdictatef(FILE * const f, const char * const margin, const char * const fmt, ...) {
     va_list args;
     va_start(args, fmt);
     vafmdictatef(f, margin, fmt, args);
     va_end(args);
 }
 
-void dictatef(const char * fmt, ...) {
+void dictatef(const char * const fmt, ...) {
     va_list args;
     va_start(args, fmt);
-    vafmdictatef(stdout, '\00', fmt, args);
+    vafmdictatef(stdout, NULL, fmt, args);
     va_end(args);
 }
 
-void vadictatef(const char * fmt, va_list args) {
-    vafmdictatef(stdout, '\00', fmt, args);
+void vadictatef(const char * const fmt, va_list args) {
+    vafmdictatef(stdout, NULL, fmt, args);
 }
 
-void fdictatef(FILE * f, const char * fmt, ...) {
+void fdictatef(FILE * const f, const char * const fmt, ...) {
     va_list args;
     va_start(args, fmt);
-    vafmdictatef(f, '\00', fmt, args);
+    vafmdictatef(f, NULL, fmt, args);
     va_end(args);
 }
 
-void vafdictatef(FILE * f, const char * fmt, va_list args) {
-    vafmdictatef(f, '\00', fmt, args);
+void vafdictatef(FILE * const f, const char * const fmt, va_list args) {
+    vafmdictatef(f, NULL, fmt, args);
 }
 
-void mdictatef(char margin, const char * fmt, ...) {
+void mdictatef(const char * const margin, const char * const fmt, ...) {
     va_list args;
     va_start(args, fmt);
     vafmdictatef(stdout, margin, fmt, args);
     va_end(args);
 }
 
-void vamdictatef(char margin, const char * fmt, va_list args) {
+void vamdictatef(const char * const margin, const char * const fmt, va_list args) {
     vafmdictatef(stdout, margin, fmt, args);
 }
 
 // Complex type printers
-void dictate_str(FILE * f, char m, const char * const str) {
-    file_margin_dictate_conditional_format(
-        f,
-        m,
-        false,
-        str
-    );
+void dictate_str(FILE * const f, const char * const m, const char * const str) {
+    file_margin_dictate_conditional_format(f, m, false, str);
 }
 
 // Dictate is in the Public Domain, and if you say this is not a legal notice, I will sue you.
