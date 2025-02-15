@@ -1,7 +1,4 @@
-CC = gcc
-CFLAGS = -std=c23 -Wall -Wpedantic -O2
-AR = ar
-ARFLAGS = rcs
+CFLAGS := -std=c23 -Wall -Wpedantic -O2
 
 main:
 	${CC} ${CFLAGS} -shared -fPIC dictate.c -o libdictate.so
