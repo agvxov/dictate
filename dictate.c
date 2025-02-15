@@ -1,4 +1,5 @@
 #include "dictate.h"
+#include <string.h>
 
 /* ## Dictate Imeplementation
  */
@@ -9,6 +10,12 @@ static thread_local int pedantic_flushing__    = 1;
 
 void dictate_pedantic_flush(bool b) { pedantic_flushing__    = b; }
 void dictate_color_enabled(bool b)  { color_enabled_global__ = b; }
+
+#define PRINT_MARGIN do { \
+        if (margin) { \
+            file_margin_dictate_conditional_format(f, NULL, false, margin); \
+        } \
+    } while (0)
 
 // dependency for the core function (recursion with indirection)
 static
@@ -29,14 +36,6 @@ void vararg_file_margin_dictate_conditional_format(
     const char * const fmt,
     va_list args
   ) {
-    #define PRINT_MARGIN do { \
-            if (margin) { \
-                file_margin_dictate_conditional_format(f, NULL, false, margin); \
-            } \
-        } while (0)
-
-    PRINT_MARGIN;
-
     for (const char * s = fmt; *s != '\0'; s++) {
         switch (*s) {
             case '$': { // Color handling
@@ -147,8 +146,6 @@ void vararg_file_margin_dictate_conditional_format(
     if (pedantic_flushing__) {
         fflush(f);
     }
-
-    #undef PRINT_MARGIN
 }
 
 static
@@ -166,6 +163,7 @@ void file_margin_dictate_conditional_format(
 }
 
 void vafmdictatef(FILE * const f, const char * const margin, const char * const fmt, va_list args) {
+    PRINT_MARGIN;
     vararg_file_margin_dictate_conditional_format(f, margin, true, fmt, args);
 }
 
@@ -212,8 +210,17 @@ void vamdictatef(const char * const margin, const char * const fmt, va_list args
 }
 
 // Complex type printers
-void dictate_str(FILE * const f, const char * const m, const char * const str) {
-    file_margin_dictate_conditional_format(f, m, false, str);
+void dictate_str(FILE * const f, const char * const margin, int h, int n, const char * const str) {
+    if (h == 1) {
+        PRINT_MARGIN;
+    }
+
+    file_margin_dictate_conditional_format(f, margin, false, str);
+
+    if (h != n
+    &&  str[strlen(str)-1] == '\n') {
+        PRINT_MARGIN;
+    }
 }
 
 // Dictate is in the Public Domain, and if you say this is not a legal notice, I will sue you.
