@@ -10,7 +10,7 @@
 signed main(void) {
   dictate("$B## Dictate$0\n");
     dictate(10, " / ", 3, " = ", 10.0 / 3.0, "\n");
-    dictate("$rthis is a$0 Hungarian $gflag$0\n");
+    dictate("$rthis is a$0 Hungarian $gtricolor$0\n");
     dictate_color_enabled(0);
     dictate("$rthis$0 is $gnot$0\n");
     dictate_color_enabled(1);
