@@ -34,7 +34,7 @@ signed main(void) {
     mdictate("$r###$0 ", "this following text\nhas a margin\non the left\n");
 
     dictate("--------\n");
-    mdictate("### ",
+    mdictate(" $b.oO$0 ",
         "There are ", 2, " hard problems in programming:\n",
         0, ") naming things\n",
         1, ") cache misses\n",
