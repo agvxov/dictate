@@ -1,3 +1,5 @@
++ test.c should be retired to example.c and tests should be created with criterion,
+   except its currently broken on gentoo so i will wait with that
 + a quoting configuration should be introduced that wraps strings and chars in ""/'',
    escapes quoting characters and converts control characters to something human readable
    (probably carot notation)
