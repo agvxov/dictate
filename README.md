@@ -9,7 +9,7 @@ but not limited to the cli.
 - is variadic,
 - resolves irritating `<stdio.h>` inconsistencies,
 - has debug variants,
-- has a convenient way to handle colours,
+- has a convenient way to handle colors,
 - and adds margin support.
 
 ## Example
@@ -35,7 +35,7 @@ The sole reason dictate exists is this:
 ## Colors
 With dictate,
 instead of passing in ascii escape sequences directly,
-you pass in color specifies of the form: `$<first-letter-of-colour>`.
+you pass in color specifies of the form: `$<first-letter-of-color>`.
 Not only is this easier to remember,
 you can also toggle their rendering (per thread),
 which makes implementing something like `NO_COLOR` compliance trivial.
