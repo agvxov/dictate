@@ -55,9 +55,9 @@ void dictate_color_enabled(bool b);
  */
 #if 0
 void dictate(...);
-void mdictate(char margin, ...);
+void mdictate(const char * margin, ...);
 void fdictate(FILE * f, ...);
-void fmdictate(FILE * f, char margin, ...);
+void fmdictate(FILE * f, const char * margin, ...);
 #endif
 
 // ################################
