@@ -7,3 +7,4 @@
    the only reasonable thing to do is to allow them in formats
 + support for the most common library structs when a foreign header is detected
 + user type printing
++ maybe i should use nullptr\_t instead of my own null type
