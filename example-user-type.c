@@ -1,4 +1,4 @@
-// @BAKE gcc -o $*.out $@ dictate.c -std=c23
+// @BAKE gcc -o $*.out $@ dictate.c -Wall -Wpedantic -std=c23
 #include <stdio.h>
 #define DICTATE_H
 #include "dictate.h"
@@ -9,7 +9,7 @@ struct byte byte(unsigned char c) { return (struct byte) { .b = c, }; }
 
 static inline
 void dictate_byte(DICTATE_PRINTER_COMMON_ARGS, struct byte b) {
-    printf("%02X", b.b);
+    fprintf(f, "%02X", b.b);
 }
 
 #define DICTATE_USER_TYPES , struct byte : dictate_byte
