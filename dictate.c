@@ -41,12 +41,14 @@ void vararg_file_margin_dictate_conditional_format(
             case '$': { // Color handling
                 if (color_enabled_global__) {
                     switch (*(++s)) {
-                        case 'r': fputs("\033[31m", f); break;
-                        case 'g': fputs("\033[32m", f); break;
-                        case 'b': fputs("\033[34m", f); break;
-                        case 'y': fputs("\033[33m", f); break;
-                        case 'm': fputs("\033[35m", f); break;
-                        case 'c': fputs("\033[36m", f); break;
+                        case 'r': fputs("\033[31m", f); break; // red
+                        case 'g': fputs("\033[32m", f); break; // green
+                        case 'b': fputs("\033[34m", f); break; // blue
+                        case 'y': fputs("\033[33m", f); break; // yellow
+                        case 'm': fputs("\033[35m", f); break; // magenta
+                        case 'c': fputs("\033[36m", f); break; // cyan
+                        case 'd': fputs("\033[30m", f); break; // dark (black)
+                        case 'w': fputs("\033[37m", f); break; // white
                         case 'B': fputs("\033[1m",  f); break;
                         case 'I': fputs("\033[3m",  f); break;
                         case '0': fputs("\033[0m",  f); break;
@@ -61,6 +63,8 @@ void vararg_file_margin_dictate_conditional_format(
                         case 'y': ;
                         case 'm': ;
                         case 'c': ;
+                        case 'd': ;
+                        case 'w': ;
                         case 'B': ;
                         case 'I': ;
                         case '0': break;

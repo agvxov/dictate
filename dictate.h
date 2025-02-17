@@ -31,6 +31,8 @@ void dictate_pedantic_flush(bool b);
  *     $y  -> Yellow
  *     $m  -> Magenta
  *     $c  -> Cyan
+ *     $d  -> black ("dark")
+ *     $w  -> white
  *     $B  -> Bold
  *     $I  -> Italic
  *     $0  -> Reset
