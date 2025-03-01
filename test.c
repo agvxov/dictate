@@ -1,11 +1,21 @@
 /* @BAKE
+    # C
     gcc   -o $*-gcc.out   $@ dictate.c -std=c23 -Wall -Wpedantic -ggdb -fsanitize=address
     clang -o $*-clang.out $@ dictate.c -std=c23 -Wall -Wpedantic -ggdb
+    # C++
+    gcc   -o dictate.o -c    dictate.c -std=c23 -Wall -Wpedantic -ggdb -fsanitize=address
+    g++   -o $*-g++.out   $@ dictate.o          -Wall -Wpedantic -ggdb -fsanitize=address
+    # Run
     ./$*-gcc.out; echo
-    ./$*-clang.out
+    ./$*-clang.out; echo
+    ./$*-g++.out
    @STOP
 */
-#include "dictate.h"
+#ifdef __cplusplus
+#  include "dictate.hpp"
+#else
+#  include "dictate.h"
+#endif
 
 signed main(void) {
   dictate("$B## Dictate$0\n");
