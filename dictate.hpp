@@ -47,6 +47,11 @@ static inline void dictate_switch(DICTATEPP_PRINTER_COMMON_ARGS, const void * i)
 static inline void dictate_switch(DICTATEPP_PRINTER_COMMON_ARGS, const char * i) {
     dictate_str(f, m, h, n, i);
 }
+// C++ STD type printers
+#include <string>
+static inline void dictate_switch(DICTATEPP_PRINTER_COMMON_ARGS, const std::string & i) {
+    dictate_str(f, m, h, n, i.c_str());
+}
 
 template <typename... Args>
 void fmdictate(FILE * f, const char * const m, Args&&... args) {
