@@ -5,6 +5,9 @@ main:
 	${CC} ${CFLAGS} -c dictate.c -o dictate.o
 	${AR} rcs libdictate.a dictate.o
 
+test:
+	bake test.c
+
 clean:
 	-rm dictate.o
 	-rm libdictate.so
