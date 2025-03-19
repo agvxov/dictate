@@ -27,9 +27,6 @@ extern "C" {
     void dictate_str(FILE * const f, const char * const m, int h, int n, const char * const str);
 }
 
-// type printer template
-template <typename T>
-void dictate_switch(DICTATEPP_PRINTER_COMMON_ARGS, const T& arg) { ; }
 // trivial type printers
 static inline void dictate_switch(DICTATEPP_PRINTER_COMMON_ARGS, const bool i)               { fprintf(f, i ? "true" : "false"); }
 static inline void dictate_switch(DICTATEPP_PRINTER_COMMON_ARGS, const char i)               { fprintf(f, "%c", i); }
