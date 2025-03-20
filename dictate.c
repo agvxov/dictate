@@ -52,6 +52,7 @@ void vararg_file_margin_dictate_conditional_format(
                         case 'B': fputs("\033[1m",  f); break;
                         case 'I': fputs("\033[3m",  f); break;
                         case '0': fputs("\033[0m",  f); break;
+                        case '$': fputs("$",        f); break;
                         default: --s; break; // Invalid color code, backtrack
                     }
                 } else {
@@ -68,6 +69,7 @@ void vararg_file_margin_dictate_conditional_format(
                         case 'B': ;
                         case 'I': ;
                         case '0': break;
+                        case '$': fputc('$', f);
                         default: --s; break;
                     }
                 }
