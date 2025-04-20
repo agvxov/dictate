@@ -13,6 +13,7 @@
 */
 #ifdef __cplusplus
 #  include "dictate.hpp"
+#  include <vector>
 #else
 #  include "dictate.h"
 #endif
@@ -40,6 +41,12 @@ signed main(void) {
     dictatef("this too is padded here: %*d\n", 6, 10);
     dictatef("my values are 3 6 9 twelve: $b%d %d %d %s$0\n", 3, 6, 9, "twelve");
     dictate("using %s a %x format specifier %d without 'f' does nothing\n");
+
+  #ifdef __cplusplus
+    std::vector<std::string> v = { "aaa", "bbb", "ccc" };
+
+    dictate(v);
+  #endif
 
     return 0;
 }

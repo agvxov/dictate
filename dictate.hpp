@@ -53,6 +53,16 @@ static inline void dictate_switch(DICTATEPP_PRINTER_COMMON_ARGS, const std::stri
     dictate_str(f, m, h, n, i.c_str());
 }
 
+template <typename T>
+static inline void dictate_switch(DICTATEPP_PRINTER_COMMON_ARGS, T t) {
+    fputs("[ ", f);
+    for (const auto &i : t) {
+        dictate_switch(f, m, h, n, i);
+        fputs(", ", f);
+    }
+    fputc(']', f);
+}
+
 template <typename... Args>
 void fmdictate(FILE * f, const char * const m, Args&&... args) {
     constexpr std::size_t n = sizeof...(args);
