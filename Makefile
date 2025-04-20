@@ -12,3 +12,4 @@ clean:
 	-rm dictate.o
 	-rm libdictate.so
 	-rm libdictate.a
+	-rm *.out
