@@ -10,6 +10,9 @@ main:
 test:
 	bake test/test.c
 
+man:
+	ts-md2man README.md > object/dictate.3
+
 clean:
 	-${RM} object/*{.o,.so,.a}
 	-${RM} test/*.out

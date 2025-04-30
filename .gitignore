@@ -1,5 +1,6 @@
+.gdb_history
 *.out
 *.o
 *.so
 *.a
-.gdb_history
+*.3
