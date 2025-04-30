@@ -1,10 +1,12 @@
 /* @BAKE
+    DICTATE_C=../source/dictate.c
+    DICTATE_O=../source/dictate.o
     # C
-    gcc   -o $*-gcc.out   $@ dictate.c -std=c23 -Wall -Wpedantic -ggdb -fsanitize=address
-    clang -o $*-clang.out $@ dictate.c -std=c23 -Wall -Wpedantic -ggdb
+    gcc   -o $*-gcc.out      $@ ${DICTATE_C} -std=c23 -Wall -Wpedantic -ggdb -fsanitize=address
+    clang -o $*-clang.out    $@ ${DICTATE_C} -std=c23 -Wall -Wpedantic -ggdb
     # C++
-    gcc   -o dictate.o -c    dictate.c -std=c23 -Wall -Wpedantic -ggdb -fsanitize=address
-    g++   -o $*-g++.out   $@ dictate.o          -Wall -Wpedantic -ggdb -fsanitize=address
+    gcc   -o ${DICTATE_O} -c    ${DICTATE_C} -std=c23 -Wall -Wpedantic -ggdb -fsanitize=address
+    g++   -o $*-g++.out      $@ ${DICTATE_O}          -Wall -Wpedantic -ggdb -fsanitize=address
     # Run
     ./$*-gcc.out; echo
     ./$*-clang.out; echo

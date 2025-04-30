@@ -1,15 +1,15 @@
+.PHONY: test
+
 CFLAGS := -std=c23 -Wall -Wpedantic -O2
 
 main:
-	${CC} ${CFLAGS} -shared -fPIC dictate.c -o libdictate.so
-	${CC} ${CFLAGS} -c dictate.c -o dictate.o
-	${AR} rcs libdictate.a dictate.o
+	${CC} ${CFLAGS} -shared -fPIC source/dictate.c -o object/libdictate.so
+	${CC} ${CFLAGS} -c source/dictate.c -o object/dictate.o
+	${AR} rcs object/libdictate.a object/dictate.o
 
 test:
-	bake test.c
+	bake test/test.c
 
 clean:
-	-rm dictate.o
-	-rm libdictate.so
-	-rm libdictate.a
-	-rm *.out
+	-${RM} object/*{.o,.so,.a}
+	-${RM} test/*.out

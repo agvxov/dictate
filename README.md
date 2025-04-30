@@ -13,7 +13,7 @@ but not limited to the cli.
 - and adds margin support.
 
 ## Example
-![example.png](example.png)
+![documentation/example.png](documentation/example.png)
 
 ## Generic and variadic?
 Yes, `dictate()` is generic and variadic.
