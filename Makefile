@@ -1,6 +1,6 @@
 .PHONY: test
 
-CFLAGS := -std=c23 -Wall -Wpedantic -O2
+CFLAGS := -std=c23 -Wall -Wextra -Wpedantic -O2
 
 main:
 	${CC} ${CFLAGS} -shared -fPIC source/dictate.c -o object/libdictate.so

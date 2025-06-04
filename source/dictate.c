@@ -69,7 +69,7 @@ void vararg_file_margin_dictate_conditional_format(
                         case 'B': ;
                         case 'I': ;
                         case '0': break;
-                        case '$': fputc('$', f);
+                        case '$': fputc('$', f); break;
                         default: --s; break;
                     }
                 }
