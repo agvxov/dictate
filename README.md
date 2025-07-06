@@ -17,7 +17,7 @@ but not limited to the cli.
 ![documentation/example.png](documentation/example.png)
 
 ## Irritating stdio inconsistencies
-The sole reason dictate exists is this:
+The sole reason Dictate exists is this:
 ```C
     fprintf(FILE *, char *, ...); // FILE first
     fputs(char *, FILE *);        // FILE last
@@ -27,9 +27,9 @@ The sole reason dictate exists is this:
 Yes, `dictate()` is generic and variadic.
 You can pass in as many arguments as you wish and with the types you wish,
 without requiring a format string.
-Unless of course you *want* a format string,
+Unless, of course, you *want* a format string,
 in which case `dictatef()`
--behaving like `printf()`, but with the rest of the dictate features-
+-behaving like `printf()`, but with the rest of the Dictate features-
 has you covered.
 This is accomplished with a combination of C11's `_Generic` and macros.
 
@@ -41,10 +41,10 @@ Supported types out of the box:
 Dictate can also be expanded with user types.
 1. `DICTATE_H` has to be defined
 2. `dictate.h` has to be included, this will define `DICTATE_PRINTER_COMMON_ARGS` for us
-3. a type printer will is defined
+3. a type printer is defined
 4. `DICTATE_USER_TYPES` is defined
 5. `DICTATE_H` is undefined
-5. `dictate.h` is re-included
+6. `dictate.h` is re-included
 
 Example:
 ```C
@@ -88,16 +88,16 @@ where the name of any one functions is composed from its properties.
         %empty -> stdout
         f      -> FILE *
 ```
-The parameters the variants yield are consistent.
+The parameters used across variants are consistent.
 The easiest way to understand them is to read this signature:
 ```
 fmdictate(FILE * f, char * margin, ...);
 ```
 
 ## Colors
-With dictate,
+With Dictate,
 instead of passing in ascii escape sequences directly,
-you pass in color specifies of the form: `$<first-letter-of-color>`.
+you pass in color specifiers of the form: `$<first-letter-of-color>`.
 Not only is this easier to remember,
 you can also toggle their rendering (per thread),
 which makes implementing something like `NO_COLOR` compliance trivial.
